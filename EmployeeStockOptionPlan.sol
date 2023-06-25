@@ -101,7 +101,7 @@ contract EmployeeStockOptionPlan {
     function getExercisedOptions(
         address employee
     ) external view returns (uint256) {
-        //get the number of exercised options for an employee
+        // Return the number of exercised options for the specified employee
         return exercisedOptions[employee];
     }
 
