@@ -106,4 +106,24 @@ contract EmployeeStockOptionPlan {
     }
 
     // Add any additional functions or modifiers as needed
+    function transferOptions(
+        address to,
+        uint256 options
+    ) external onlyEmployee {
+        // Check if the sender is an employee
+        require(
+            vestingSchedules[msg.sender] > 0,
+            "Only employees can transfer options."
+        );
+
+        // Check if the sender has enough vested options
+        require(
+            vestedOptions[msg.sender] >= options,
+            "Not enough vested options."
+        );
+        // Reduce the vested options for the sender
+        vestedOptions[msg.sender] -= options;
+        // Increase the vested options for the recipient
+        vestedOptions[to] += options;
+    }
 }
