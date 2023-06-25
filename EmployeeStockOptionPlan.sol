@@ -97,7 +97,13 @@ contract EmployeeStockOptionPlan {
         return vestedOptions[employee];
     }
 
-    // Implement the necessary modifiers and access control
+    // Function to get the number of exercised options for an employee
+    function getExercisedOptions(
+        address employee
+    ) external view returns (uint256) {
+        //get the number of exercised options for an employee
+        return exercisedOptions[employee];
+    }
 
     // Add any additional functions or modifiers as needed
 }
