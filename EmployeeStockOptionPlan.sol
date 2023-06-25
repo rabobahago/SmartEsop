@@ -93,7 +93,7 @@ contract EmployeeStockOptionPlan {
     function getVestedOptions(
         address employee
     ) external view returns (uint256) {
-        //get the number of vested options for an employee
+        // Return the number of vested options for the specified employee
         return vestedOptions[employee];
     }
 
