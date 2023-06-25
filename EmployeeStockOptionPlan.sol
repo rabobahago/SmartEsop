@@ -9,6 +9,8 @@ contract EmployeeStockOptionPlan {
     mapping(address => uint256) public vestedOptions;
     // Mapping to store vesting schedules for each employee
     mapping(address => uint256) public vestingSchedules;
+    // Mapping to store exercised options
+    mapping(address => uint256) public exercisedOptions;
 
     // Implement the necessary events::
 
@@ -16,10 +18,22 @@ contract EmployeeStockOptionPlan {
     event StockOptionsGranted(address indexed employee, uint256 options);
     // Event emitted when a vesting schedule is set for an employee
     event VestingScheduleSet(address indexed employee, uint256 vestingSchedule);
+    // Event emitted when an employee exercises their options
+    event OptionsExercised(address indexed employee, uint256 options);
+
+    //implement modifiers::
 
     // Modifier to restrict function access to the contract owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can call this function.");
+        _;
+    }
+    // Modifier to restrict function access to employees only
+    modifier onlyEmployee() {
+        require(
+            vestingSchedules[msg.sender] > 0,
+            "Only employees can call this function."
+        );
         _;
     }
 
@@ -29,6 +43,8 @@ contract EmployeeStockOptionPlan {
         // Set the contract owner as the deployer of the contract
         owner = msg.sender;
     }
+
+    //implement Functions::
 
     // Implement the functions for granting stock options::
 
@@ -60,6 +76,17 @@ contract EmployeeStockOptionPlan {
     }
 
     // Implement the functions for exercising options
+    function exerciseOptions(uint256 options) external onlyEmployee {
+        require(
+            vestedOptions[msg.sender] >= options,
+            "Not enough vested options."
+        );
+
+        vestedOptions[msg.sender] -= options; // Reduce the vested options for the employee
+        exercisedOptions[msg.sender] += options; // Increase the exercised options for the employee
+
+        emit OptionsExercised(msg.sender, options); // Emit the OptionsExercised event
+    }
 
     // Implement the functions for tracking vested and exercised options
 
