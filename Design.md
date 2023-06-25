@@ -1,5 +1,4 @@
 Design:
-
 1. Define the requirements. What are the specific features that the smart contract should have? What are the security and access control requirements?
 
 2. Design the contract architecture. How will the different parts of the smart contract interact with each other? What data structures will be used to store information about stock options, vesting schedules, and exercised options?
@@ -10,7 +9,9 @@ Design:
 
 5. Deploy the smart contract. Deploy the smart contract to a testnet or mainnet blockchain.
 
-Additional considerations: 6. Security. The smart contract should be designed to be secure against common attacks, such as reentrancy, overflow/underflow, and unauthorized access.
+Additional considerations:
+
+6. Security. The smart contract should be designed to be secure against common attacks, such as reentrancy, overflow/underflow, and unauthorized access.
 
 7. Scalability. The smart contract should be designed to be scalable so that it can handle a large number of transactions.
 
