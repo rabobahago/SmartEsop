@@ -5,12 +5,17 @@ contract EmployeeStockOptionPlan {
 
     address public owner; // Address of the contract owner
     uint256 public totalOptions; // Total number of available options
-    mapping(address => uint256) public vestedOptions; // Mapping to track vested and exercised options for each employee
+    // Mapping to track vested and exercised options for each employee
+    mapping(address => uint256) public vestedOptions;
+    // Mapping to store vesting schedules for each employee
+    mapping(address => uint256) public vestingSchedules;
 
     // Implement the necessary events::
 
     // Event emitted when stock options are granted to an employee
     event StockOptionsGranted(address indexed employee, uint256 options);
+    // Event emitted when a vesting schedule is set for an employee
+    event VestingScheduleSet(address indexed employee, uint256 vestingSchedule);
 
     // Modifier to restrict function access to the contract owner
     modifier onlyOwner() {
@@ -39,9 +44,20 @@ contract EmployeeStockOptionPlan {
         emit StockOptionsGranted(employee, options); // Emit the StockOptionsGranted event
     }
 
-    // Function to grant stock options to an employee
-
     // Implement the functions for setting the vesting schedule
+    function setVestingSchedule(
+        address employee,
+        uint256 vestingSchedule
+    ) external onlyOwner {
+        require(
+            vestingSchedule > 0,
+            "Vesting schedule must be greater than zero."
+        );
+
+        vestingSchedules[employee] = vestingSchedule; // Set the vesting schedule
+
+        emit VestingScheduleSet(employee, vestingSchedule); // Emit the VestingScheduleSet event
+    }
 
     // Implement the functions for exercising options
 
